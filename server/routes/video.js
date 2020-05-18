@@ -24,12 +24,9 @@ let storage = multer.diskStorage({
 
 // File Filter
 let fileFilter = function(req, file, cb) {
-    console.log("file : ", file);
     // 파일 필터링
     let typeArray = file.mimetype.split('/');
     let fileType = typeArray[1];
-
-    console.log('fileType : ', fileType);
 
     // 확장자가 동영상이라면
     if(fileType == 'mp4') {
@@ -55,9 +52,6 @@ router.post('/uploadfiles', (req, res) => {
     console.log("/api/video/uploadfiles로 요청한 클라이언트 : ", requestIp.getClientIp(req));
     
     upload(req, res, (err) => {
-        // 필터링을 통과하면 req.file는 존재하며 통과하지 못하면 undefined이다.
-        console.log('req.file : ', req.file);
-
         if(err) {
             return res.json({
                 success: false, 
@@ -65,6 +59,7 @@ router.post('/uploadfiles', (req, res) => {
             });
         } 
 
+        // 필터링을 통과하면 req.file는 존재하며 통과하지 못하면 undefined이다.
         if(req.file) {
             return res.json({
                 success: true, 
@@ -106,7 +101,6 @@ router.post('/thumbnail', (req, res) => {
         });
     })
     .on('error', function(err) {    // 에러 발생 시의 이벤트
-        console.log(err);
         return res.json({
             success: false,
             err
@@ -131,8 +125,6 @@ router.post('/uploadVideo', (req, res) => {
 
     video.save( (err, doc) => {
         if(err) return res.json({ success: false, err });
-
-        console.log("video save success !!");
         res.status(200).json({ success: true });
     });
 });

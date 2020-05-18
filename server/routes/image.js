@@ -22,12 +22,9 @@ let storage = multer.diskStorage({
 
 // File Filter
 let fileFilter = function(req, file, cb) {
-    console.log("file : ", file);
     // 파일 필터링
     let typeArray = file.mimetype.split('/');
     let fileType = typeArray[1];
-
-    console.log('fileType : ', fileType);
 
     // 확장자가 이미지라면
     if(fileType == 'jpg' || fileType == 'png' || fileType == 'jpeg' || fileType == 'gif') {
@@ -53,9 +50,6 @@ router.post('/uploadfiles', (req, res) => {
     console.log("/api/image/uploadfiles로 요청한 클라이언트 : ", requestIp.getClientIp(req));
     
     upload(req, res, (err) => {
-        // 필터링을 통과하면 req.file는 존재하며 통과하지 못하면 undefined이다.
-        console.log('req.file : ', req.file);
-
         if(err) {
             return res.json({
                 success: false, 
@@ -63,6 +57,7 @@ router.post('/uploadfiles', (req, res) => {
             });
         } 
 
+        // 필터링을 통과하면 req.file는 존재하며 통과하지 못하면 undefined이다.
         if(req.file) {
             return res.json({
                 success: true, 

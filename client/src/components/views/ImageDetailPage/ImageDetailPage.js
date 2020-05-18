@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import { Row, Col, List, Avatar } from 'antd';
 import axios from 'axios';
+
 import SideImage from './Sections/SideImage';
 import Comment from './Sections/Comment';
+import LikeDislikes from './Sections/LikeDislikes';
 
 import * as constants from '../../Config';
 
@@ -52,7 +54,11 @@ function ImageDetailPage(props) {
                             alt="image"
                         />
                         <List.Item
-                            actions
+                            actions={[<LikeDislikes
+                                image 
+                                userId={localStorage.getItem('userId')}
+                                imageId={imageId}
+                            />]}
                         >
                             <List.Item.Meta
                                 avatar={<Avatar src={imageDetail.writer.image} />}

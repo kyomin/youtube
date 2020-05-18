@@ -37,7 +37,6 @@ function ImageUploadPage(props) {
         axios.post('/api/image/uploadfiles', formData, config)
         .then(response => {
             if(response.data.success) {
-                console.log(response.data);
                 setFilePath(response.data.url);
             } else {
                 alert('이미지 업로드를 실패했습니다.');

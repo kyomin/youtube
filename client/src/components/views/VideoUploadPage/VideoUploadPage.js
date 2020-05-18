@@ -57,8 +57,6 @@ function VideoUploadPage(props) {
         let formData = new FormData;
         let files = e.currentTarget.files;
 
-        console.log('file : ', files[0]);
-
         formData.append('file', files[0]);
         
         const config = {

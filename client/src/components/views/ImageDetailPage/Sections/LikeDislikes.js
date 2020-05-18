@@ -13,9 +13,9 @@ function LikeDislikes(props) {
     let variable = {};
 
     // 비디오를 대상으로 한 좋아요/싫어요 컴포넌트일 때, video props를 전달한다.
-    if(props.video) {
+    if(props.image) {
         variable = {
-            videoId: props.videoId,
+            imageId: props.imageId,
             userId: props.userId
         };
     } else {
@@ -27,7 +27,7 @@ function LikeDislikes(props) {
 
     useEffect(() => {
         // '좋아요'에 대한 정보를 가져온다.
-        axios.post('/api/like/getLikes', variable)
+        axios.post('/api/like/getImageLikes', variable)
         .then(response => {
             if(response.data.success) {
                 // 얼마나 많은 좋아요를 받았는지
@@ -46,7 +46,7 @@ function LikeDislikes(props) {
         });
 
         // '싫어요'에 대한 정보를 가져온다.
-        axios.post('/api/like/getDislikes', variable)
+        axios.post('/api/like/getImageDislikes', variable)
         .then(response => {
             if(response.data.success) {
                 // 얼마나 많은 싫어요를 받았는지
@@ -72,7 +72,7 @@ function LikeDislikes(props) {
             // '좋아요'를 누른 적이 없다면
             if(!likeAction) {
                 // '좋아요'를 증가시킨다.(DB 반영)
-                axios.post('/api/like/uplike', variable)
+                axios.post('/api/like/upImageLike', variable)
                 .then(response => {
                     if(response.data.success) {
                         setLikes(likes+1);  // 좋아요 1 증가
@@ -91,7 +91,7 @@ function LikeDislikes(props) {
                 });
             } else {    // 이미 '좋아요'가 클릭되어 있다면!
                 // '좋아요'를 감소시킨다.(DB 반영)
-                axios.post('/api/like/unlike', variable)
+                axios.post('/api/like/unImageLike', variable)
                 .then(response => {
                     if(response.data.success) {
                         setLikes(likes-1);  // 좋아요 1 감소
@@ -113,7 +113,7 @@ function LikeDislikes(props) {
             // '싫어요'를 누른 적이 없다면
             if(!dislikeAction) {
                 // '싫어요'를 증가시킨다.(DB 반영)
-                axios.post('/api/like/upDislike', variable)
+                axios.post('/api/like/upImageDislike', variable)
                 .then(response => {
                     if(response.data.success) {
                         setDislikes(dislikes+1);  // 싫어요 1 증가
@@ -132,7 +132,7 @@ function LikeDislikes(props) {
                 });
             } else {    // 이미 '싫어요'가 클릭되어 있다면!
                 // '싫어요'를 감소시킨다.(DB 반영)
-                axios.post('/api/like/unDislike', variable)
+                axios.post('/api/like/unImageDislike', variable)
                 .then(response => {
                     if(response.data.success) {
                         setDislikes(dislikes-1);  // 싫어요 1 감소
