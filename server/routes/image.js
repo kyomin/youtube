@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { Image } = require("../models/Image");
 
-const { auth } = require("../middleware/auth");
+const requestIp = require('request-ip');
 const multer = require('multer');
+
+const { Image } = require("../models/Image");
 
 // STORAGE MULTER CONFIG
 let storage = multer.diskStorage({
@@ -49,9 +50,8 @@ const upload = multer({
 
 /* 클라이언트에서 받은 이미지 파일을 노드 서버 storage에 저장한다. */
 router.post('/uploadfiles', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/image/uploadfiles로 요청한 클라이언트 : ", clientIp);
-
+    console.log("/api/image/uploadfiles로 요청한 클라이언트 : ", requestIp.getClientIp(req));
+    
     upload(req, res, (err) => {
         // 필터링을 통과하면 req.file는 존재하며 통과하지 못하면 undefined이다.
         console.log('req.file : ', req.file);
@@ -80,8 +80,7 @@ router.post('/uploadfiles', (req, res) => {
 
 /* MongoDB에 비디오 정보를 저장한다. */
 router.post('/uploadImage', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/image/uploadImage로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/image/uploadImage 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     // 클라이언트가 보낸 json 데이터에 맞춰 그 정보를 해당 컬럼에 저장한다.
     const image = new Image(req.body);
@@ -97,8 +96,7 @@ router.post('/uploadImage', (req, res) => {
 
 /* DB에 저장된 이미지들을 가져와서 클라이언트에 보낸다. */
 router.get('/getImages', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/image/getImages로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/image/getImages 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     // DB의 Video 테이블에서 찾는 쿼리이다.
     Image.find()
@@ -122,8 +120,7 @@ router.get('/getImages', (req, res) => {
 
 /* 사용자가 클릭한 특정 이미지 정보를 가져온다. */
 router.post('/getImageDetail', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/image/getImageDetail 요청한 클라이언트 : ", clientIp);
+    console.log("/api/image/getImageDetail 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     // _id 애트리뷰트를 이용해서 찾겠다.
     Image.findOne({"_id" : req.body.imageId})

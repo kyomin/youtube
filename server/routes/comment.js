@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+
+const requestIp = require('request-ip');
+
 const { Comment } = require("../models/Comment");
 const { ImageComment } = require('../models/ImageComment');
 
@@ -10,8 +13,7 @@ const { ImageComment } = require('../models/ImageComment');
 
 
 router.post('/saveVideoComment', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/comment/saveVideoComment 요청한 클라이언트 : ", clientIp);
+    console.log("/api/comment/saveVideoComment로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     const comment = new Comment(req.body);
 
@@ -63,8 +65,7 @@ router.post('/getVideoComments', (req, res) => {
 
 
 router.post('/saveImageComment', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/comment/saveImageComment 요청한 클라이언트 : ", clientIp);
+    console.log("/api/comment/saveImageComment 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     const comment = new ImageComment(req.body);
 

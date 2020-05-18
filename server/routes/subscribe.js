@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+
+const requestIp = require('request-ip');
+
 const { Subscriber } = require("../models/Subscriber");
 
 
@@ -49,9 +52,8 @@ router.post('/subscribed', (req, res) => {
 
 /* 구독 취소 */
 router.post('/unSubscribe', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/subscribe/subscribed로 요청한 클라이언트 : ", clientIp);
-
+    console.log("/api/subscribe/subscribed로 요청한 클라이언트 : ", requestIp.getClientIp(req));
+    
     Subscriber.findOneAndDelete({ userTo: req.body.userTo, userFrom: req.body.userFrom })
     .exec((err, doc) => {
         if(err) {
@@ -71,8 +73,7 @@ router.post('/unSubscribe', (req, res) => {
 
 /* 구독 하기 */
 router.post('/subscribe', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/subscribe/subscribe로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/subscribe/subscribe로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     const subscribe = new Subscriber(req.body);
 

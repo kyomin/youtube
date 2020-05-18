@@ -4,9 +4,9 @@ const { Video } = require("../models/Video");
 const { Subscriber } = require("../models/Subscriber");
 const { Comment } = require("../models/Comment");
 
-const { auth } = require("../middleware/auth");
+const requestIp = require('request-ip');
 const multer = require('multer');
-var ffmpeg = require('fluent-ffmpeg');
+const ffmpeg = require('fluent-ffmpeg');
 
 // STORAGE MULTER CONFIG
 let storage = multer.diskStorage({
@@ -52,9 +52,8 @@ const upload = multer({
 
 /* 클라이언트에서 받은 비디오 파일을 노드 서버 storage에 저장한다. */
 router.post('/uploadfiles', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/video/uploadfiles로 요청한 클라이언트 : ", clientIp);
-
+    console.log("/api/video/uploadfiles로 요청한 클라이언트 : ", requestIp.getClientIp(req));
+    
     upload(req, res, (err) => {
         // 필터링을 통과하면 req.file는 존재하며 통과하지 못하면 undefined이다.
         console.log('req.file : ', req.file);
@@ -83,8 +82,7 @@ router.post('/uploadfiles', (req, res) => {
 
 /* 썸네일 생성하고 비디오 러닝타임도 가져오기 */
 router.post('/thumbnail', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/video/thumbnail로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/video/thumbnail 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     let filePath = "";
     let fileDuration = "";
@@ -100,6 +98,7 @@ router.post('/thumbnail', (req, res) => {
         filePath = "uploads/thumbnails/" + filenames[0];
     })
     .on('end', function() {     // 썸네일 생성 완료 시에 무엇을 할 것인지의 이벤트
+        // 클라이언트로 썸네일 정보 담아서 응답한다.
         return res.json({
             success: true,
             url: filePath,
@@ -125,8 +124,7 @@ router.post('/thumbnail', (req, res) => {
 
 /* MongoDB에 비디오 정보를 저장한다. */
 router.post('/uploadVideo', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/video/uploadVideo로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/video/uploadVideo로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     // 클라이언트가 보낸 json 데이터에 맞춰 그 정보를 해당 컬럼에 저장한다.
     const video = new Video(req.body);
@@ -142,8 +140,7 @@ router.post('/uploadVideo', (req, res) => {
 
 /* DB에 저장된 비디오들을 가져와서 클라이언트에 보낸다. */
 router.get('/getVideos', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/video/getVideos로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/video/getVideos로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     // DB의 Video 테이블에서 찾는 쿼리이다.
     Video.find()
@@ -167,8 +164,7 @@ router.get('/getVideos', (req, res) => {
 
 /* 사용자가 클릭한 특정 비디오 정보를 가져온다. */
 router.post('/getVideoDetail', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/video/getVideoDetail로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/video/getVideoDetail로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     // _id 애트리뷰트를 이용해서 찾겠다.
     Video.findOne({"_id" : req.body.videoId})
@@ -203,8 +199,7 @@ router.post('/getVideoDetail', (req, res) => {
 
 /* 구독 중인 비디오 정보를 가져온다. */
 router.post('/getSubscriptionVideos', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/video/getSubscriptionVideos로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/video/getSubscriptionVideos로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     // 자신의 아이디를 가지고 구독하는 사람들을 찾는다.
     Subscriber.find({ userFrom: req.body.userFrom })

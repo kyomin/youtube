@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const requestIp = require('request-ip');
+
 const { Like } = require("../models/Like");
 const { DisLike } = require("../models/DisLike");
 
@@ -9,9 +11,6 @@ const { DisLike } = require("../models/DisLike");
 //=================================
 
 router.post('/getLikes', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/like/getLikes 요청한 클라이언트 : ", clientIp);
-
     let variable = {};
 
     if(req.body.videoId) {
@@ -38,9 +37,6 @@ router.post('/getLikes', (req, res) => {
 
 
 router.post('/getDislikes', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/like/getDislikes 요청한 클라이언트 : ", clientIp);
-    
     let variable = {};
 
     if(req.body.videoId) {
@@ -67,8 +63,7 @@ router.post('/getDislikes', (req, res) => {
 
 
 router.post('/uplike', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/like/uplike 요청한 클라이언트 : ", clientIp);
+    console.log("/api/like/uplike로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     let variable = {};
 
@@ -110,8 +105,7 @@ router.post('/uplike', (req, res) => {
 
 
 router.post('/unlike', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/like/unlike 요청한 클라이언트 : ", clientIp);
+    console.log("/api/like/unlike로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     let variable = {};
 
@@ -138,8 +132,7 @@ router.post('/unlike', (req, res) => {
 
 
 router.post('/upDislike', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/like/upDislike 요청한 클라이언트 : ", clientIp);
+    console.log("/api/like/upDislike로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     let variable = {};
 
@@ -181,8 +174,7 @@ router.post('/upDislike', (req, res) => {
 
 
 router.post('/unDislike', (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/like/unDislike 요청한 클라이언트 : ", clientIp);
+    console.log("/api/like/unDislike로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     let variable = {};
 

@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { User } = require("../models/User");
 
+const requestIp = require('request-ip');
+
+const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
 
 //=================================
@@ -22,9 +24,8 @@ router.get("/auth", auth, (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/users/register로 요청한 클라이언트 : ", clientIp);
-
+    console.log("/api/users/register로 요청한 클라이언트 : ", requestIp.getClientIp(req));
+    
     const user = new User(req.body);
 
     user.save((err, doc) => {
@@ -36,8 +37,7 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/users/login로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/users/login로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     User.findOne({ email: req.body.email }, (err, user) => {
         if (!user)
@@ -65,8 +65,7 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/logout", auth, (req, res) => {
-    const clientIp = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress;
-    console.log("/api/users/logout로 요청한 클라이언트 : ", clientIp);
+    console.log("/api/users/logout로 요청한 클라이언트 : ", requestIp.getClientIp(req));
 
     User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
         if (err) return res.json({ success: false, err });
