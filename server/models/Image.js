@@ -1,9 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const jwt = require('jsonwebtoken');
-const moment = require("moment");
-
 const Schema = mongoose.Schema;
 
 // 스키마 정의(테이블 어트리뷰트 정의)
