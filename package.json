@@ -13,7 +13,7 @@
     "frontend": "npm run start --prefix client",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
-  "author": "John ahn",
+  "author": "kyomin",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
