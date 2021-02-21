@@ -1,24 +1,62 @@
-<<<<<<< HEAD
+# 개요   
 
-안녕하세요!
+YouTube, Netflix와 같은 동영상 스트리밍 사이트를 웹 프로그래밍을 이용하여 만든 프로젝트입니다.   
+이 애플리케이션을 사용하기 위해서 다음의 절차를 밟아야 합니다.
+   
+1. make dev.js file inside config folder 
+2. put mongoDB info into dev.js file 
+3. Type `npm install` inside the `root directory`  ( Download Server Dependencies ) 
+4. Type `npm install` inside the `client directory` ( Download Front-end Dependencies )   
+   
+   
+사용된 기술은 다음과 같습니다.   
+   
+- Front End : ReactJS
+- Back End : NodeJS
+- Database : MongoDB   
+   
+해당 프로젝트에 대해 문의 사항이 있다면 아래 이메일로 연락 바랍니다.   
+   
+- email : kim031504@naver.com   
+   
+   
+   #
+# Landing Page   
 
-이 프로젝트는 웹 프로그래밍을 이용하여 기존의 유튜브를 클론한 프로젝트입니다.
+![Landing Page](https://user-images.githubusercontent.com/46395776/108624376-fda83b80-7487-11eb-813e-77ace6ba834e.png)   
+   
+   
+   #
+# Landing Page With Login   
 
-쓰여진 기술은 다음과 같습니다.
+![Landing Page With Login](https://user-images.githubusercontent.com/46395776/108624410-25979f00-7488-11eb-940c-0673ad6e8f18.png)   
+   
+   
+   #
+# Login Page   
 
-front-end : React.js
+![Login Page](https://user-images.githubusercontent.com/46395776/108624428-43650400-7488-11eb-8857-843b220ee7e9.png)   
+   
+   
+   #
+# Register Page   
 
-back-end : Node.js & MongoDB
+![Register Page](https://user-images.githubusercontent.com/46395776/108624445-5d9ee200-7488-11eb-84ee-6c2c72b72058.png)   
+   
+   
+   #
+# Video Upload Page   
 
-이 어플리케이션을 실행시키기 위해서는 다음의 절차를 밟아야 합니다.
+![Video Upload Page](https://user-images.githubusercontent.com/46395776/108624461-71e2df00-7488-11eb-8c97-880b39cfe619.png)   
+   
+   
+   #
+# Video Detail Page(1)   
 
-1. config 폴더 내의 dev.js 파일 안에 자신의 mongoDB 정보를 기입합니다.
-2. root 디렉토리에서의 "npm install" 명령어는 Server Dependencies를 위한 것입니다.
-3. client 디렉토리에서의 "npm install" 명령어는 Front-end Dependencies를 위한 것입니다.
+![Video Detail Page(1)](https://user-images.githubusercontent.com/46395776/108624488-9343cb00-7488-11eb-8ee8-80a149a07958.png)   
+   
+   
+   #
+# Video Detail Page(2)   
 
-
-어플리케이션을 실행시킬 때 발생하는 문제나, 코드에 대한 의문점 및 개선 사항에 대한 의견은 다음의 연락처로 문의 바랍니다!
-
-e-mail : kim031504@naver.com
-
->>>>>>> 7fc45acd9c9ad9acafadc7177275c8d5d9bddac8
+![Video Detail Page(2)](https://user-images.githubusercontent.com/46395776/108624513-b8383e00-7488-11eb-9610-13857f59a636.png)
