@@ -4,8 +4,6 @@
 
 dev.js
 
-
-
 .DS_Store
 
 npm-debug.log*
@@ -13,3 +11,4 @@ yarn-debug.kog*
 yarn-error.log*
 
 .vscode
+package-lock.json
